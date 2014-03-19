@@ -1,0 +1,6 @@
+source 'http://rubygems.org'
+
+gem 'zip' #for unzipping zips in zips
+gem 'rspec'
+gem 'rake'
+gem 'ci_reporter'

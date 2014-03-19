@@ -1,0 +1,10 @@
+require 'rspec/core/rake_task'
+require 'ci/reporter/rake/rspec'
+
+task :default => [:spec]
+task :spec => ["ci:setup:rspec"]
+
+desc "Run the unit tests for xfttools Ruby programs."
+RSpec::Core::RakeTask.new do |t|
+  t.ruby_opts = "-I../../lib/ruby"
+end
