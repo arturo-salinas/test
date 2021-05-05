@@ -34,6 +34,23 @@ TEST(BrokerTest, AddOneCarrierWithNoBundling)
     broker.add(c1);
 }
 
+TEST(BrokerTest, SeveralCarriersWithNoBundling)
+{
+    MockBFX bfx;
+    Carrier c1(1, 20);
+    Carrier c2(2, 30);
+    Carrier c3(3, 50);
+    Broker broker(&bfx);
+    EXPECT_CALL(bfx, setPvScalingFactor(_, _, _)).Times(Exactly(1));
+    broker.add(c1);
+    EXPECT_CALL(bfx, setPvScalingFactor(_, _, _)).Times(Exactly(2));
+    broker.add(c2);
+    EXPECT_CALL(bfx, setPvScalingFactor(_, 1, 0.2)).Times(Exactly(1));
+    EXPECT_CALL(bfx, setPvScalingFactor(_, 2, 0.3)).Times(Exactly(1));
+    EXPECT_CALL(bfx, setPvScalingFactor(_, 3, 0.5)).Times(Exactly(1));
+    broker.add(c3);
+}
+
 int main(int argc, char **argv)
 {
     testing::InitGoogleTest(&argc, argv);
