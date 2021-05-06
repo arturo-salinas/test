@@ -7,7 +7,7 @@ of power scaling registers.
 ```C++
 PV_ant = PV_cb0 * BfxScaleCarrier[0] + PV_cb1 * BfxScaleCarrier[1] + .. + PV_cb<n> * BfxScaleCarrierBr<n>
 ```
-Where PV_ant is Power Value per antenna and PV_cb<n>are the reported values 
+Where PV_ant is Power Value per antenna and PV_cb<n> are the reported values 
 Baseband.
 
 Some carriers are bundled because they share the same power characteristics (numerology).
