@@ -23,12 +23,12 @@ Carrier *CarrierFactory::Create(double power, int bundleID)
     if (isFreeID)
     {
         ids.insert(it, i);
-        return new Carrier(i, power);
+        return new Carrier(i, power, bundleID);
     }
     else
     {
         ids.push_back(++lastID);
-        return new Carrier(lastID, power);
+        return new Carrier(lastID, power, bundleID);
     }
 }
 

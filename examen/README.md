@@ -25,7 +25,7 @@ Carriers with bundling
 ---
 
 ```C++
-BfxScaleCarrier[carrierID] = P_Bundled[carrierID] / totalPower
+BfxScaleCarrier[carrierID] = P[carrierID] / totalPowerInBundle
 ```
 Where _P\_Bundled_ is the total power of all the carriers inside a bundle.
 

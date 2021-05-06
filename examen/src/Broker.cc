@@ -1,5 +1,7 @@
 #include "../inc/Broker.h"
 
+#include <map>
+
 Broker::Broker(BFX *bfxAccess) : bfxAccess(bfxAccess)
 {
 }
@@ -17,15 +19,32 @@ void Broker::add(Carrier carrier)
 void Broker::configurePvScalingFactors()
 {
     double totalPower{0};
+    std::map<int, double> bundlesPower;
 
     for (auto carrier : carriers)
     {
-        totalPower += carrier.getPowerInWatts();
+        if (carrier.getBundledID() != 0)
+        {
+            auto search = bundlesPower.find(carrier.getBundledID());
+            if (search != bundlesPower.end())
+            {
+                bundlesPower[carrier.getBundledID()] += carrier.getPowerInWatts();
+            }
+            else
+            {
+                bundlesPower.insert({carrier.getBundledID(), carrier.getPowerInWatts()});
+            }
+        }
+        else
+            totalPower += carrier.getPowerInWatts();
     }
 
     for (auto carrier : carriers)
     {
         std::string error = "";
-        bfxAccess->setPvScalingFactor(error, carrier.getID(), carrier.getPowerInWatts() / totalPower);
+        if (carrier.getBundledID() == 0)
+            bfxAccess->setPvScalingFactor(error, carrier.getID(), carrier.getPowerInWatts() / totalPower);
+        else
+            bfxAccess->setPvScalingFactor(error, carrier.getID(), carrier.getPowerInWatts() / bundlesPower[carrier.getBundledID()]);
     }
 }

@@ -56,6 +56,26 @@ TEST(BrokerTest, SeveralCarriersWithNoBundling)
     CarrierFactory::Destroy(c1);
 }
 
+TEST(BrokerTest, SeveralCarriersWithBundling)
+{
+    MockBFX bfx;
+    Carrier *c1 = CarrierFactory::Create(20, 1);
+    Carrier *c2 = CarrierFactory::Create(30, 1);
+    Carrier *c3 = CarrierFactory::Create(50, 0);
+    Broker broker(&bfx);
+    EXPECT_CALL(bfx, setPvScalingFactor(_, _, _)).Times(Exactly(1));
+    broker.add(*c1);
+    EXPECT_CALL(bfx, setPvScalingFactor(_, _, _)).Times(Exactly(2));
+    broker.add(*c2);
+    EXPECT_CALL(bfx, setPvScalingFactor(_, 1, 0.4)).Times(Exactly(1));
+    EXPECT_CALL(bfx, setPvScalingFactor(_, 2, 0.6)).Times(Exactly(1));
+    EXPECT_CALL(bfx, setPvScalingFactor(_, 3, 1)).Times(Exactly(1));
+    broker.add(*c3);
+    CarrierFactory::Destroy(c3);
+    CarrierFactory::Destroy(c2);
+    CarrierFactory::Destroy(c1);
+}
+
 int main(int argc, char **argv)
 {
     testing::InitGoogleTest(&argc, argv);

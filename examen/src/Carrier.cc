@@ -1,6 +1,6 @@
 #include "../inc/Carrier.h"
 
-Carrier::Carrier(int carrierID, double power) : powerInWatts(power), carrierID(carrierID)
+Carrier::Carrier(int carrierID, double power, int bundleID) : powerInWatts(power), carrierID(carrierID), bundleID(bundleID)
 {
 };
 
