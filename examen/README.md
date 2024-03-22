@@ -1,3 +1,13 @@
+Code Review Task
+==
+An important task we do in Radio SW teams is code review. Therefore, let's 
+look at a small piece of C++ code for code review. The code is compiling 
+and its unit tests are passing. The goal is to provide comments on code style, 
+C++ standards, efficiency, maintainability, code behavior as well as test 
+coverage. In summary, this could be any issue that should be addressed 
+before merging the code into the official repository.
+
+
 Power Scaling
 ==
 
